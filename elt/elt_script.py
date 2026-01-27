@@ -16,3 +16,22 @@ def wait_for_postgres(host, max_retires=5, delay=5):
             time.sleep(delay)
     print("Max retries reached. PostgreSQL is not ready.")
     return False
+
+if not wait_for_postgres(host="source_postgres"):
+    exit(1)
+
+print("Starting ETL process...")
+
+source_config = {
+    'dbname': 'source_db',
+    'user': 'postgres',
+    'password': 'secret',
+    'host': 'source_postgres'
+}
+
+destination_config = {
+    'dbname': 'destination_db',
+    'user': 'postgres',
+    'password': 'secret',
+    'host': 'destination_postgres'
+}   
