@@ -38,11 +38,23 @@ destination_config = {
 
 dump_command = ["pg_dump",
                 "-h", source_config['host'],
-                "-U", source_config['user'],
+                "-u", source_config['user'],
                 "-d", source_config['dbname'],
-                "-F",'data_dump.sql',
+                "-f",'data_dump.sql',
                 "-w"]
 
 subprocess_env = dict(PGPASSWORD=source_config['password'])
 
 subprocess.run(dump_command, env=subprocess_env, check=True)
+
+load_command = ["psql",
+                "-h", destination_config['host'],
+                "-u", destination_config['user'],
+                "-d", destination_config['dbname'],
+                "-a", "-f", "data_dump.sql",
+                "-w"]
+
+subprocess_env = dict(PGPASSWORD=destination_config['password'])
+subprocess.run(load_command, env=subprocess_env, check=True)
+
+print("ETL process completed successfully.")
