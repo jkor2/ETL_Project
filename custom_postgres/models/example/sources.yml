@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: destination_db
+    description: "The destination database for the ETL process"
+    database: destination_db
+    schema: public
+    tables:
+      - name: films
+        description: "this table contains details about films."
+      - name: actors
+        description: "this table contains details about actors."
+      - name: film_actors
+        description: "this table maps films to actors."
